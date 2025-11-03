@@ -1,0 +1,10 @@
+[
+    {
+      "PROPER_NAME": "Test",
+      "NAMES": [
+        "test",
+        "Test"
+      ],
+      "DESCRIPTION": "Shouldn't be here."
+    }
+  ]
