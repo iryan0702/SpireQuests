@@ -32,7 +32,6 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @SuppressWarnings({"unused"})
 @SpireInitializer
@@ -70,7 +69,7 @@ public class Anniv8Mod implements
 
     public static final Map<String, Keyword> keywords = new HashMap<>();
 
-    public static List<String> unfilteredAllQuestsIDs = new ArrayList<>();
+    public static List<String> allQuestNames = new ArrayList<>();
 
     public static String makeID(String idText) {
         return modID + ":" + idText;
@@ -209,15 +208,25 @@ public class Anniv8Mod implements
         return "eng";
     }
 
+    private static void addQuestID(AutoAdd.Info info, AbstractQuest quest) {
+        allQuestNames.add(quest.id);
+    }
+
     @Override
     public void receiveEditStrings() {
+        Collection<CtClass> questClasses = new AutoAdd(modID)
+                .packageFilter(Anniv8Mod.class)
+                .findClasses(AbstractQuest.class);
+
+        questClasses.stream().forEach(ctClass -> allQuestNames.add(ctClass.getSimpleName().toLowerCase(Locale.ROOT)));
+
         loadStrings("eng");
 
-        loadQuestStrings(QuestManager.quests(), "eng");
+        loadQuestStrings(allQuestNames, "eng");
         if (Settings.language != Settings.GameLanguage.ENG)
         {
             loadStrings(Settings.language.toString().toLowerCase());
-            loadQuestStrings(QuestManager.quests(), Settings.language.toString().toLowerCase());
+            loadQuestStrings(allQuestNames, Settings.language.toString().toLowerCase());
         }
     }
 
@@ -236,10 +245,9 @@ public class Anniv8Mod implements
     }
 
 
-    public void loadQuestStrings(List<AbstractQuest> quests, String langKey) {
+    public void loadQuestStrings(List<String> questNames, String langKey) {
 
-        for (AbstractQuest quest : quests) {
-            String questName = quest.id.replace(modID,"").toLowerCase(Locale.ROOT);
+        for (String questName : questNames) {
             String languageAndQuest = langKey + "/" + questName;
             String filepath = modID + "Resources/localization/" + languageAndQuest + "/";
             if (!Gdx.files.internal(filepath).exists()) {
@@ -268,13 +276,13 @@ public class Anniv8Mod implements
 
     @Override
     public void receiveEditKeywords() {
-        loadKeywords(QuestManager.quests(), "eng");
+        loadKeywords(allQuestNames, "eng");
         if (Settings.language != Settings.GameLanguage.ENG) {
-            loadKeywords(QuestManager.quests(), Settings.language.toString().toLowerCase());
+            loadKeywords(allQuestNames, Settings.language.toString().toLowerCase());
         }
     }
 
-    private void loadKeywords(List<AbstractQuest> quests, String langKey) {
+    private void loadKeywords(List<String> questNames, String langKey) {
         String filepath = modID + "Resources/localization/" + langKey + "/Keywordstrings.json";
         Gson gson = new Gson();
         List<Keyword> keywords = new ArrayList<>();
@@ -282,8 +290,7 @@ public class Anniv8Mod implements
             String json = Gdx.files.internal(filepath).readString(String.valueOf(StandardCharsets.UTF_8));
             keywords.addAll(Arrays.asList(gson.fromJson(json, Keyword[].class)));
         }
-        for (AbstractQuest quest : quests) {
-            String questName = quest.id.replace(modID,"").toLowerCase(Locale.ROOT);
+        for (String questName : questNames) {
             String languageAndQuest = langKey + "/" + questName;
             String questJson = modID + "Resources/localization/" + languageAndQuest + "/Keywordstrings.json";
             FileHandle handle = Gdx.files.internal(questJson);
