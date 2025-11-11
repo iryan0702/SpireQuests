@@ -18,24 +18,31 @@ import java.util.ArrayList;
 import static spireQuests.Anniv8Mod.makeUIPath;
 
 public class QuestBoardProp {
-    public static final float DRAW_X;
-    public static final float DRAW_Y;
+    public final float drawX;
+    public final float drawY;
     public Hitbox hb;
     public ArrayList<AbstractQuest> quests;
     protected static final String questBoardPropImagePath = makeUIPath("bulletin_board.png");
     private final Texture sprite;
     public int numQuestsPickable;
 
-    public QuestBoardProp() {
+    public static QuestBoardProp questBoardProp;
+
+    public QuestBoardProp(float drawX, float drawY) {
+        this.drawX = drawX;
+        this.drawY = drawY;
         this.quests = new ArrayList<>();
         // TODO select 3 random quests
         this.quests.add(new TestQuest());
         this.quests.add(new TestQuest());
         this.quests.add(new TestQuest());
+        for (AbstractQuest quest : quests) {
+            quest.setCost();
+        }
         numQuestsPickable = 2;
         this.sprite = TexLoader.getTexture(questBoardPropImagePath);
         this.hb = new Hitbox(sprite.getWidth() * Settings.xScale, sprite.getHeight() * Settings.yScale);
-        this.hb.move(DRAW_X + ((float) sprite.getWidth() / 2) * Settings.xScale, DRAW_Y + ((float) sprite.getHeight() / 2) * Settings.yScale);
+        this.hb.move(drawX + ((float) sprite.getWidth() / 2) * Settings.xScale, drawY + ((float) sprite.getHeight() / 2) * Settings.yScale);
     }
 
     public void update() {
@@ -49,18 +56,13 @@ public class QuestBoardProp {
 
     public void render(SpriteBatch sb) {
         sb.setColor(Color.WHITE);
-        sb.draw(sprite, DRAW_X, DRAW_Y, sprite.getWidth() * Settings.xScale, sprite.getHeight() * Settings.yScale);
+        sb.draw(sprite, drawX, drawY, sprite.getWidth() * Settings.xScale, sprite.getHeight() * Settings.yScale);
         if (this.hb.hovered) {
             sb.setBlendFunction(770, 1);
             sb.setColor(Color.GOLD);
-            sb.draw(sprite, DRAW_X, DRAW_Y, sprite.getWidth() * Settings.xScale, sprite.getHeight() * Settings.yScale);
+            sb.draw(sprite, drawX, drawY, sprite.getWidth() * Settings.xScale, sprite.getHeight() * Settings.yScale);
             sb.setBlendFunction(770, 771);
         }
         this.hb.render(sb);
-    }
-
-    static {
-        DRAW_X = (float)Settings.WIDTH * 0.5F - 300.0F * Settings.xScale;
-        DRAW_Y = AbstractDungeon.floorY + 109.0F * Settings.yScale;
     }
 }

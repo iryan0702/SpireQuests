@@ -5,18 +5,18 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.rooms.ShopRoom;
+import com.megacrit.cardcrawl.neow.NeowRoom;
 import spireQuests.ui.QuestBoardProp;
 
-public class ShopPatch {
+public class NeowPatch {
 	@SpirePatch(
-			clz = ShopRoom.class,
+			clz = NeowRoom.class,
 			method = "render",
 			paramtypez = SpriteBatch.class
 	)
 	public static class PostRender {
 		@SpirePostfixPatch()
-		public static void Render(ShopRoom original, SpriteBatch sb) {
+		public static void Render(NeowRoom original, SpriteBatch sb) {
 			if (QuestBoardProp.questBoardProp != null) {
 				QuestBoardProp.questBoardProp.render(sb);
 			}
@@ -24,7 +24,7 @@ public class ShopPatch {
 	}
 
 	@SpirePatch(
-			clz = ShopRoom.class,
+			clz = NeowRoom.class,
 			method = "update"
 	)
 	public static class PostUpdate {
@@ -37,13 +37,13 @@ public class ShopPatch {
 	}
 
 	@SpirePatch(
-			clz = ShopRoom.class,
-			method = "onPlayerEntry"
+			clz = NeowRoom.class,
+			method = SpirePatch.CONSTRUCTOR
 	)
-	public static class PostPlayerEntry {
+	public static class PostConstructor {
 		@SpirePostfixPatch()
-		public static void PlayerEntry() {
-			QuestBoardProp.questBoardProp = new QuestBoardProp((float) Settings.WIDTH * 0.5F - 300.0F * Settings.xScale, AbstractDungeon.floorY + 109.0F * Settings.yScale);
+		public static void Constructor() {
+			QuestBoardProp.questBoardProp = new QuestBoardProp((float) Settings.WIDTH * 0.5F - 425.0F * Settings.xScale, AbstractDungeon.floorY + 189.0F * Settings.yScale);
 		}
 	}
 }

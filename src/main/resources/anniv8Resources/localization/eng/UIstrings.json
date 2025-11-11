@@ -3,7 +3,8 @@
     "TEXT": [
       "Spire Quests",
       "",
-      ""
+      "",
+      "Enable quests to have costs to pick up."
     ]
   },
   "${ModID}:QuestUI": {
