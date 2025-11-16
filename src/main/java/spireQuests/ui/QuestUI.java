@@ -67,11 +67,16 @@ public class QuestUI {
 
             Hitbox hb = questHitboxes.get(i);
 
-            float height = SMALL_SPACING * (1 + quest.questRewards.size());
+            int trackerCount = 0;
+            for (AbstractQuest.Tracker t : quest.trackers) {
+                if (!t.hidden()) ++trackerCount;
+            }
+
+            float height = LARGE_SPACING + SMALL_SPACING * trackerCount;
             currentY -= height;
 
             hb.resize(quest.width, height - 2);
-            hb.translate(xPos - quest.width, currentY);
+            hb.translate(xPos - quest.width, currentY + 1);
             hb.update();
 
             if (hb.hovered) {
@@ -121,7 +126,7 @@ public class QuestUI {
 
             Settings.GOLD_COLOR.a = questAlpha;
             Settings.RED_TEXT_COLOR.a = questAlpha;
-            Color.GRAY.a = questAlpha;
+            Color.LIGHT_GRAY.a = questAlpha;
             Color.WHITE.a = questAlpha;
 
             for (int i = 0; i < quests.size(); ++i) {
@@ -143,7 +148,7 @@ public class QuestUI {
                     if (tracker.hidden()) continue;
 
                     yPos -= SMALL_SPACING;
-                    Color textColor = Color.GRAY;
+                    Color textColor = Color.LIGHT_GRAY;
                     if (hb.hovered) {
                         textColor = Color.WHITE;
                     }
@@ -166,7 +171,7 @@ public class QuestUI {
 
             Settings.GOLD_COLOR.a = 1;
             Settings.RED_TEXT_COLOR.a = 1;
-            Color.GRAY.a = 1;
+            Color.LIGHT_GRAY.a = 1;
             Color.WHITE.a = 1;
             largeFont.getData().setScale(1);
         }
