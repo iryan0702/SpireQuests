@@ -23,13 +23,13 @@ public class JewelledBauble extends AbstractSQRelic {
     @Override
     public void atBattleStartPreDraw() {
         this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-        List<AbstractCard> rares = AbstractDungeon.srcUncommonCardPool.group.stream()
+        List<AbstractCard> uncommons = AbstractDungeon.srcUncommonCardPool.group.stream()
                 .filter(r -> r.rarity == AbstractCard.CardRarity.UNCOMMON)
                 .map(AbstractCard::makeCopy)
                 .collect(Collectors.toList());
-        if (!rares.isEmpty()) {
-            Collections.shuffle(rares, new java.util.Random(AbstractDungeon.cardRandomRng.randomLong()));
-            ArrayList<AbstractCard> choices = rares.stream().limit(3).collect(Collectors.toCollection(ArrayList::new));
+        if (!uncommons.isEmpty()) {
+            Collections.shuffle(uncommons, new java.util.Random(AbstractDungeon.cardRandomRng.randomLong()));
+            ArrayList<AbstractCard> choices = uncommons.stream().limit(3).collect(Collectors.toCollection(ArrayList::new));
             this.addToBot(new FlexibleDiscoveryAction(choices, false));
         }
     }
