@@ -18,7 +18,7 @@ import java.util.Objects;
 
 // LessonOfTheAsceticQuest:
 // Obtain a modified blasphemy with ethereal and no upsides
-// play it 4 times to receive a blasphemy+
+// play it 3 times to receive a blasphemy+
 public class LessonOfTheAsceticQuest extends AbstractQuest {
 
     public LessonOfTheAsceticQuest() {

@@ -19,7 +19,7 @@ import java.util.Objects;
 
 // LessonOfTheCoreQuest:
 // Obtain a modified reboot with ethereal and no upsides
-// play it 8 times to receive a reboot+
+// play it 9 times to receive a reboot+
 public class LessonOfTheCoreQuest extends AbstractQuest {
 
     public LessonOfTheCoreQuest() {

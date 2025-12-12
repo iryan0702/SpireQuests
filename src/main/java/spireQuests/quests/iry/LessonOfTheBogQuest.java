@@ -18,7 +18,7 @@ import java.util.Objects;
 
 // LessonOfTheBogQuest:
 // Obtain a modified nightmare with ethereal and no upsides
-// play it 3 times to receive a nightmare+
+// play it 4 times to receive a nightmare+
 public class LessonOfTheBogQuest extends AbstractQuest {
 
     public LessonOfTheBogQuest() {
