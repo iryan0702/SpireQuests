@@ -13,7 +13,6 @@ import spireQuests.quests.QuestReward;
 import spireQuests.quests.iry.cards.ClumsyBlasphemy;
 import spireQuests.quests.iry.util.LessonQuestUtil;
 import spireQuests.util.Wiz;
-
 import java.util.*;
 
 // LessonOfTheAsceticQuest:
