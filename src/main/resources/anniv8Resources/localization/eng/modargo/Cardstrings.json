@@ -51,7 +51,7 @@
   },
   "${ModID}:Curseblast": {
     "NAME": "Curseblast",
-    "DESCRIPTION": "Deal !D! damage. Deals !M! additional damage for each Curse in your deck."
+    "DESCRIPTION": "Deal !D! damage to ALL enemies. Deals !M! additional damage for each Curse in your deck."
   },
   "${ModID}:SkullGaze": {
     "NAME": "Skull Gaze",
